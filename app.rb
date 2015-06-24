@@ -1,0 +1,91 @@
+require 'sinatra'
+require 'json'
+
+# generic error handler for uncaught exceptions
+# this is only fired in production mode
+error do
+	content_type :json
+	status 500
+
+	err = env['sinatra.error']
+
+	{"error" => err.message}.to_json
+end
+
+# tests a regular expression against a string
+# params: regex, regex_options, test_string
+post '/test_expr' do	
+	request.body.rewind
+	reqData = JSON.parse(request.body.read)
+
+	regex_string = reqData["regex"]
+	regex_options = reqData["regex_options"]
+	test_string = reqData["test_string"]
+
+	content_type :json
+
+	if (regex_string == nil or regex_string =~ /^\s+$/ or test_string == nil or test_string =~ /^\s+$/)
+		status 400
+		return {"error" => "Invalid parameters"}.to_json
+	end
+
+	matches = test_regexpr(regex_string, regex_options, test_string)
+
+	matches.to_json
+end
+
+def test_regexpr(regex_string, regex_options, test_string)
+	regex_options = parse_regex_options(regex_options)
+
+	regex = Regexp.new(regex_string, regex_options)
+
+	matches = Hash.new
+	matches["capture_groups"] = Array.new
+	matches["match_data"] = Array.new
+
+	test_string.scan(regex) do
+		current_group_captures = Array.new
+
+		match = Regexp.last_match
+		matched_string = match[0]
+		
+		match_data = Hash.new
+		match_data["matched_string"] = matched_string
+		match_data["begin"] = match.begin(0)
+		match_data["end"] = match.end(0)
+
+		matches["match_data"] << match_data
+
+		num_matches = match.length
+		i = 1
+
+		while (i < num_matches)
+			current_group_captures << match[i]
+			i += 1
+		end
+
+		if (current_group_captures.length > 0)
+			matches["capture_groups"] << current_group_captures
+		end
+	end
+
+	matches
+end
+
+def parse_regex_options(regex_options)
+	opts = 0
+
+	if (regex_options =~ /i/i)
+		opts |= Regexp::IGNORECASE
+	end
+
+	if (regex_options =~ /x/i)
+		opts |= Regexp::EXTENDED
+	end
+
+	if (regex_options =~ /m/i)
+		opts |= Regexp::MULTILINE
+	end
+
+	opts
+end
