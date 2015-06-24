@@ -39,7 +39,7 @@ class RegexTesterApp < Sinatra::Application
 
 		content_type :json
 
-		if (regex_string == nil or regex_string =~ /^\s+$/ or test_string == nil or test_string =~ /^\s+$/)
+		if (regex_string == nil or regex_string =~ /\A\s+\z/ or test_string == nil or test_string =~ /\A\s+\z/)
 			status 400
 			return {"error" => "Invalid parameters"}.to_json
 		end
