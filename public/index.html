@@ -1,14 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html data-ng-app="regexTester">
 	<head>
 		<title>Regex Tester</title>
 		<link rel="stylesheet" href="assets/vendor.css">
 		<link rel="stylesheet" href="assets/application.css">
 	</head>
-	<body>
-		This is index.html
+	<body data-ng-controller="regexTesterController">
+		<div class="container">
+			<div class="row">
+				<span>/</span>
+				<input type="text" width="75%" data-ng-model="regex">
+				<span>/</span>
+				<input type="text" width="25%" data-ng-model="regexOpts">
+			</div>
+			<div class="row">
+				<textarea data-ng-model="testString" data-ng-change="runTest()"></textarea>
+			</div>
+			<div class="row">
+				{{ testResult }}
+			</div>
+		</div>
 
-		<script type="text/javascript" src="assets/vendor.js" />
-		<script type="text/javascript" src="assets/application.js" />
+		<script type="text/javascript" src="assets/vendor.js"></script>
+		<script type="text/javascript" src="assets/application.js"></script>
 	</body>
 </html>
