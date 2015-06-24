@@ -11,7 +11,7 @@ app.service('regexTesterService', ['$q', '$http', function($q, $http){
 		};
 
 		var deferred = $q.defer();
-		$http.post('/test_expr', postData).then(function success(result){
+		$http.post('test_expr', postData).then(function success(result){
 			deferred.resolve(result.data);
 		}, function error(response){
 			deferred.reject(response);
