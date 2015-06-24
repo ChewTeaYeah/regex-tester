@@ -1,15 +1,29 @@
 require 'sinatra'
 require 'json'
 
+set :show_exceptions, false # turns off the HTML response to exceptions in dev mode
+
 # generic error handler for uncaught exceptions
-# this is only fired in production mode
 error do
 	content_type :json
 	status 500
 
+	{"error" => "Sorry, an error occurred processing your request"}.to_json
+end
+
+# error handler for Regexp errors
+error RegexpError do
+	content_type :json
+	status 422 # unprocessable entity
+
 	err = env['sinatra.error']
 
 	{"error" => err.message}.to_json
+end
+
+# serve the frontend
+get '/' do
+	send_file File.expand_path('index.html', settings.public_folder)
 end
 
 # tests a regular expression against a string
