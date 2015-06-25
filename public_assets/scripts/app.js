@@ -36,7 +36,7 @@ app.controller('regexTesterController', ['$scope', 'regexTesterService', functio
 		}
 
 		regexTesterService.testExpr($scope.regex, $scope.regexOptsText, $scope.testString).then(function success(result){
-			$scope.testResult = JSON.stringify(result);
+			$scope.testResult = result;
 		}, function error(response){
 			$scope.testResult = JSON.stringify(response.data);
 		});

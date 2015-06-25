@@ -46,8 +46,28 @@
 				</div>
 			</div>
 			<div class="row" style="margin-top: 2%;">
-				<label>Test Input</label>
-				<textarea data-ng-model="testString" class="form-control" rows="25"></textarea>
+				<div class="col-md-6">
+					<label>Test Input</label>
+					<textarea data-ng-model="testString" class="form-control" rows="25"></textarea>
+				</div>
+				<div class="col-md-6">
+					<div class="row">
+						<label>Matched String</label>
+					</div>
+					<div class="row" data-ng-if="testResult.capture_groups">
+						<label>Capture Groups</label>
+						<ol>
+							<li data-ng-repeat="group in testResult.capture_groups">
+								Match Group
+								<ol>
+									<li data-ng-repeat="capture in group">
+										{{ capture }}
+									</li>
+								</ol>
+							</li>
+						</ol>
+					</div>
+				</div>
 			</div>
 			<div class="row">
 				{{ testResult }}
