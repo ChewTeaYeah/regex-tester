@@ -8,13 +8,46 @@
 	<body data-ng-controller="regexTesterController">
 		<div class="container">
 			<div class="row">
-				<span>/</span>
-				<input type="text" width="75%" data-ng-model="regex">
-				<span>/</span>
-				<input type="text" width="25%" data-ng-model="regexOpts">
+				<div class="col-md-9">
+					<label>Regular Expression</label>
+					<div class="input-group">
+						<span class="input-group-addon">/</span>
+						<input type="text" class="form-control" data-ng-model="regex">
+						<span class="input-group-addon">/</span>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="col-md-4">
+						<label>Options</label>
+						<input type="text" class="form-control" data-ng-model="regexOptsText">
+					</div>
+					<div class="col-md-8">
+						<div class="row">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" data-ng-model="regexOptions.i">
+									<span style="font-size: xx-small;">Ignore Case (i)</span>
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" data-ng-model="regexOptions.x">
+									<span style="font-size: xx-small;">Ignore Whitespace (x)</span>
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" data-ng-model="regexOptions.m">
+									<span style="font-size: xx-small;">Multi-line [dot matches newlines] (m)</span>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="row">
-				<textarea data-ng-model="testString" data-ng-change="runTest()"></textarea>
+			<div class="row" style="margin-top: 2%;">
+				<label>Test Input</label>
+				<textarea data-ng-model="testString" class="form-control" rows="25"></textarea>
 			</div>
 			<div class="row">
 				{{ testResult }}
