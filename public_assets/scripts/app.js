@@ -67,11 +67,15 @@ app.controller('regexTesterController', ['$scope', 'regexTesterService', functio
 		}
 	});
 
-	var validOptsRegex = /^([mxi]?){0,3}$/i;
+	var validOptsRegex = /^(m?i?x?|i?m?x?|m?x?i?|i?x?m?|x?m?i?|x?i?m?)$/;
+	var isValidRegexOptString = function(str){
+		return (angular.isString(str) && str.length <= 3 && validOptsRegex.test(str));
+	};
+
 	$scope.$watch('regexOptsText', function(newVal, oldVal){
 		if (newVal !== oldVal && angular.isString(newVal)){
 			// TODO: augment this if statement to also ensure all chars in input are unique
-			if (newVal.length <= 3 && validOptsRegex.test(newVal)){
+			if (isValidRegexOptString(newVal)){
 				$scope.regexOptsText = newVal.toLowerCase();
 			} else {
 				$scope.regexOptsText = oldVal;
