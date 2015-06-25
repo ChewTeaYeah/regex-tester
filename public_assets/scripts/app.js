@@ -27,6 +27,7 @@ app.controller('regexTesterController', ['$scope', 'regexTesterService', functio
 	$scope.regex = "";
 	$scope.regexOptsText = "";
 	$scope.testString = "";
+	$scope.matchedStringData = [];
 
 	var runTest = function(){
 		if (!angular.isString($scope.regex) || $scope.regex.length === 0 
@@ -37,9 +38,44 @@ app.controller('regexTesterController', ['$scope', 'regexTesterService', functio
 
 		regexTesterService.testExpr($scope.regex, $scope.regexOptsText, $scope.testString).then(function success(result){
 			$scope.testResult = result;
+			$scope.matchedStringData = [];
+			var lastEnd = 0;
+
+			angular.forEach($scope.testResult.match_data, function(item){
+				if (angular.isNumber(lastEnd) && angular.isNumber(item.begin) && lastEnd !== item.begin){
+					var text = $scope.testString.substring(lastEnd, item.begin);
+					$scope.matchedStringData.push({
+						text: text,
+						highlight: false
+					});
+				}
+
+				$scope.matchedStringData.push({
+					text: item.matched_string,
+					highlight: true
+				});
+
+				lastEnd = item.end;
+			});
+
+			if (lastEnd < $scope.testString.length){
+				$scope.matchedStringData.push({
+					text: $scope.testString.substring(lastEnd, $scope.testString.length),
+					highlight: false
+				});
+			}
+
 		}, function error(response){
-			$scope.testResult = JSON.stringify(response.data);
+			$scope.testResult = response.data;
 		});
+	};
+
+	$scope.getMatchDisplayStyle = function(match){
+		if (match.highlight){
+			return {'border': '1px solid black'};
+		}
+
+		return {};
 	};
 
 	$scope.regexOptions = {
