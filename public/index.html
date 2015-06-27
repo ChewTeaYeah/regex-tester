@@ -57,7 +57,7 @@
 			<div class="row" style="margin-top: 2%;">
 				<div class="col-md-6">
 					<label>Test Input</label>
-					<textarea data-ng-model="testString" class="form-control" rows="25" style="resize: none;"></textarea>
+					<textarea data-ng-model="testString" class="form-control" rows="10"></textarea>
 				</div>
 				<div class="col-md-6">
 					<div class="row">
@@ -84,6 +84,119 @@
 							</ol>
 						</div>
 					</div>
+				</div>
+			</div>
+			<div class="row" style="text-align: center; margin-top: 1%; border-top: 1px solid black; padding-top: 1%;">
+				<label>Quick Reference</label>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<table class="table table-hover">
+						<tr>
+							<td>(...)</td>
+							<td>Capture everything enclosed</td>
+						</tr>
+						<tr>
+							<td>(x|y)</td>
+							<td>Match x or y</td>
+						</tr>
+						<tr>
+							<td>x?</td>
+							<td>Match 0 or 1 of x</td>
+						</tr>
+						<tr>
+							<td>x*</td>
+							<td>Match 0 or more of x</td>
+						</tr>
+						<tr>
+							<td>x+</td>
+							<td>Match 1 or more of x</td>
+						</tr>
+						<tr>
+							<td>x{5}</td>
+							<td>Match exactly 5 of x</td>
+						</tr>
+						<tr>
+							<td>x{5, }</td>
+							<td>Match 5 or more of x</td>
+						</tr>
+						<tr>
+							<td>x{5, 7}</td>
+							<td>Match between 5 and 7 of x</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-4">
+					<table class="table table-hover">
+						<tr>
+							<td>.</td>
+							<td>Match any single character; also matches newlines if the /m option is present</td>
+						</tr>
+						<tr>
+							<td>\s</td>
+							<td>Match any whitespace character</td>
+						</tr>
+						<tr>
+							<td>\S</td>
+							<td>Match any non-whitespace character</td>
+						</tr>
+						<tr>
+							<td>\d</td>
+							<td>Match any digit</td>
+						</tr>
+						<tr>
+							<td>\D</td>
+							<td>Match any non-digit character</td>
+						</tr>
+						<tr>
+							<td>\w</td>
+							<td>Match any word character (letters, numbers, underscores)</td>
+						</tr>
+						<tr>
+							<td>\W</td>
+							<td>Match any non-word character</td>
+						</tr>
+						<tr>
+							<td>\b</td>
+							<td>Match any word boundary character (i.e. match between a word and non-word character)</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-4">
+					<table class="table table-hover">
+						<tr>
+							<td>[abc]</td>
+							<td>Match any single character in the set: a, b, or c</td>
+						</tr>
+						<tr>
+							<td>[^abc]</td>
+							<td>Match any single character NOT in the set: a, b, or c</td>
+						</tr>
+						<tr>
+							<td>[a-z]</td>
+							<td>Match any character from a to z</td>
+						</tr>
+						<tr>
+							<td>[a-zA-Z]</td>
+							<td>Match any character from a to z or from A-Z</td>
+						</tr>
+						<tr>
+							<td>^</td>
+							<td>Anchor expression to the start of the line</td>
+						</tr>
+						<tr>
+							<td>$</td>
+							<td>Anchor expression to the end of the line</td>
+						</tr>
+						<tr>
+							<td>\A</td>
+							<td>Anchor expression to the start of the string</td>
+						</tr>
+						<tr>
+							<td>\Z</td>
+							<td>Anchor expression to the end of the string</td>
+						</tr>
+					</table>
 				</div>
 			</div>
 		</div>
