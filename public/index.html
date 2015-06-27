@@ -9,11 +9,16 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-9">
-					<label>Regular Expression</label>
-					<div class="input-group">
-						<span class="input-group-addon">/</span>
-						<input type="text" class="form-control" data-ng-model="regex">
-						<span class="input-group-addon">/</span>
+					<div class="row">
+						<label>Regular Expression</label>
+						<div class="input-group">
+							<span class="input-group-addon">/</span>
+							<input type="text" class="form-control" data-ng-model="regex">
+							<span class="input-group-addon">/</span>
+						</div>
+					</div>
+					<div class="row" data-ng-if="regexError">
+						<alert data-type="danger">Regular Expression Error - {{ regexError }}</alert>
 					</div>
 				</div>
 				<div class="col-md-3">
@@ -74,12 +79,6 @@
 						</ol>
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<span style="font-weight: bold">Server Response:</span> {{ testResult }}
-			</div>
-			<div class="row">
-				<span style="font-weight: bold">Processed Match Data:</span> {{ matchedStringData }}
 			</div>
 		</div>
 

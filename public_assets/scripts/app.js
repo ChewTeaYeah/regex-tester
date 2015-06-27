@@ -28,6 +28,7 @@ app.controller('regexTesterController', ['$scope', '$sce', 'regexTesterService',
 	$scope.regexOptsText = "";
 	$scope.testString = "";
 	$scope.matchedStringData = [];
+	$scope.regexError = "";
 
 	var addTextToMatchData = function(text, highlight){
 		if (angular.isString(text)){
@@ -44,6 +45,11 @@ app.controller('regexTesterController', ['$scope', '$sce', 'regexTesterService',
 		if (!angular.isString($scope.regex) || $scope.regex.length === 0 
 			|| !angular.isString($scope.testString) || $scope.testString.length === 0){
 			$scope.testResult = "";
+			$scope.matchedStringData = [];
+			if (angular.isString($scope.regex) && $scope.regex.length === 0){
+				$scope.regexError = "";
+			}
+
 			return;
 		}
 
@@ -68,14 +74,22 @@ app.controller('regexTesterController', ['$scope', '$sce', 'regexTesterService',
 				addTextToMatchData($scope.testString.substring(lastEnd, $scope.testString.length), false);
 			}
 
+			$scope.regexError = "";
 		}, function error(response){
-			$scope.testResult = response.data;
+			$scope.testResult = "";
+			$scope.matchedStringData = [];
+			if (response.status === 422){
+				$scope.regexError = response.data.error;
+			}
 		});
 	};
 
 	$scope.getMatchDisplayStyle = function(match){
 		if (match.highlight){
-			return {'border': '1px solid black'};
+			return {
+				'margin-right': '1px',
+				'background-color': '#ACCEF7'
+			};
 		}
 
 		return {};
