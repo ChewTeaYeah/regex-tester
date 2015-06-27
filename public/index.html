@@ -58,7 +58,7 @@
 				<div class="col-md-6">
 					<div class="row">
 						<label>Matched String</label>
-						<div>
+						<div class="well">
 							<span data-ng-repeat="match in matchedStringData" 
 								  data-ng-style="getMatchDisplayStyle(match)"
 								  data-ng-bind-html="match.text">
@@ -67,16 +67,18 @@
 					</div>
 					<div class="row" data-ng-if="testResult.capture_groups.length">
 						<label>Capture Groups</label>
-						<ol>
-							<li data-ng-repeat="group in testResult.capture_groups">
-								Match Group
-								<ol>
-									<li data-ng-repeat="capture in group">
-										{{ capture }}
-									</li>
-								</ol>
-							</li>
-						</ol>
+						<div class="well">
+							<ol>
+								<li data-ng-repeat="group in testResult.capture_groups">
+									Match Group
+									<ol>
+										<li data-ng-repeat="capture in group">
+											{{ capture }}
+										</li>
+									</ol>
+								</li>
+							</ol>
+						</div>
 					</div>
 				</div>
 			</div>

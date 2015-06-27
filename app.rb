@@ -104,8 +104,4 @@ class RegexTesterApp < Sinatra::Application
 
 		opts
 	end
-
-	if (app_file == $0)
-		run!
-	end
 end
