@@ -23,11 +23,22 @@ app.service('regexTesterService', ['$q', '$http', function($q, $http){
 	return svc;
 }]);
 
-app.controller('regexTesterController', ['$scope', 'regexTesterService', function($scope, regexTesterService){
+app.controller('regexTesterController', ['$scope', '$sce', 'regexTesterService', function($scope, $sce, regexTesterService){
 	$scope.regex = "";
 	$scope.regexOptsText = "";
 	$scope.testString = "";
 	$scope.matchedStringData = [];
+
+	var addTextToMatchData = function(text, highlight){
+		if (angular.isString(text)){
+			text = $sce.trustAsHtml(text.replace(/\n/g, '<br>'));
+		}
+
+		$scope.matchedStringData.push({
+			text: text,
+			highlight: highlight
+		});
+	}
 
 	var runTest = function(){
 		if (!angular.isString($scope.regex) || $scope.regex.length === 0 
@@ -44,25 +55,17 @@ app.controller('regexTesterController', ['$scope', 'regexTesterService', functio
 			angular.forEach($scope.testResult.match_data, function(item){
 				if (angular.isNumber(lastEnd) && angular.isNumber(item.begin) && lastEnd !== item.begin){
 					var text = $scope.testString.substring(lastEnd, item.begin);
-					$scope.matchedStringData.push({
-						text: text,
-						highlight: false
-					});
+
+					addTextToMatchData(text, false);
 				}
 
-				$scope.matchedStringData.push({
-					text: item.matched_string,
-					highlight: true
-				});
+				addTextToMatchData(item.matched_string, true);
 
 				lastEnd = item.end;
 			});
 
 			if (lastEnd < $scope.testString.length){
-				$scope.matchedStringData.push({
-					text: $scope.testString.substring(lastEnd, $scope.testString.length),
-					highlight: false
-				});
+				addTextToMatchData($scope.testString.substring(lastEnd, $scope.testString.length), false);
 			}
 
 		}, function error(response){
@@ -110,7 +113,6 @@ app.controller('regexTesterController', ['$scope', 'regexTesterService', functio
 
 	$scope.$watch('regexOptsText', function(newVal, oldVal){
 		if (newVal !== oldVal && angular.isString(newVal)){
-			// TODO: augment this if statement to also ensure all chars in input are unique
 			if (isValidRegexOptString(newVal)){
 				$scope.regexOptsText = newVal.toLowerCase();
 			} else {

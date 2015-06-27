@@ -53,9 +53,12 @@
 				<div class="col-md-6">
 					<div class="row">
 						<label>Matched String</label>
-						<span data-ng-repeat="match in matchedStringData" data-ng-style="getMatchDisplayStyle(match)">
-							{{ match.text }}
-						</span>
+						<div>
+							<span data-ng-repeat="match in matchedStringData" 
+								  data-ng-style="getMatchDisplayStyle(match)"
+								  data-ng-bind-html="match.text">
+							</span>
+						</div>
 					</div>
 					<div class="row" data-ng-if="testResult.capture_groups.length">
 						<label>Capture Groups</label>
