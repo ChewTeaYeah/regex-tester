@@ -21,7 +21,7 @@
 							<span class="input-group-addon">/</span>
 						</div>
 					</div>
-					<div class="row" data-ng-if="regexError">
+					<div class="row ng-cloak" data-ng-if="regexError">
 						<alert data-type="danger">Regular Expression Error - {{ regexError }}</alert>
 					</div>
 				</div>
@@ -59,7 +59,7 @@
 					<label>Test Input</label>
 					<textarea data-ng-model="testString" class="form-control" rows="10"></textarea>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-6 ng-cloak">
 					<div class="row">
 						<label>Matched String</label>
 						<div class="well" style="word-wrap: break-word;">
