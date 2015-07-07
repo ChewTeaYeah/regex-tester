@@ -9,7 +9,12 @@ Bundler.setup :default
 require 'sinatra/base'
 require 'sprockets'
 require 'uglifier'
+require 'rake'
 require './app'
+
+puts "Running assets:compile rake task"
+Rake.load_rakefile 'Rakefile'
+Rake::Task['assets:compile'].invoke
 
 map '/assets' do
   environment = Sprockets::Environment.new RegexTesterApp.settings.root
