@@ -47,11 +47,14 @@ app.controller('regexTesterController', ['$scope', '$sce', 'regexTesterService',
 			text: text,
 			highlight: highlight
 		});
-	}
+	};
+
+	var hasInputs = function(){
+		return (angular.isString($scope.regex) && $scope.regex.length > 0 && angular.isString($scope.testString) && $scope.testString.length > 0);
+	};
 
 	var runTest = function(){
-		if (!angular.isString($scope.regex) || $scope.regex.length === 0 
-			|| !angular.isString($scope.testString) || $scope.testString.length === 0){
+		if (!hasInputs()){
 			$scope.testResult = "";
 			$scope.matchedStringData = [];
 			if (angular.isString($scope.regex) && $scope.regex.length === 0){
@@ -90,6 +93,14 @@ app.controller('regexTesterController', ['$scope', '$sce', 'regexTesterService',
 				$scope.regexError = response.data.error;
 			}
 		});
+	};
+
+	$scope.matchSuccess = function(){
+		return angular.isDefined($scope.testResult) && angular.isArray($scope.testResult.match_data) && $scope.testResult.match_data.length > 0;
+	};
+
+	$scope.showNoMatchesError = function(){
+		return !$scope.matchSuccess() && hasInputs();
 	};
 
 	$scope.getMatchDisplayStyle = function(match){

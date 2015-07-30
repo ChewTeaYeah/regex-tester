@@ -63,10 +63,14 @@
 					<div class="row">
 						<label>Matched String</label>
 						<div class="well" style="word-wrap: break-word;">
-							<span data-ng-repeat="match in matchedStringData" 
+							<span data-ng-show="matchSuccess()"
+								  data-ng-repeat="match in matchedStringData" 
 								  data-ng-style="getMatchDisplayStyle(match)"
 								  data-ng-bind-html="match.text">
 							</span>
+							<div data-ng-show="showNoMatchesError()" style="font-size: x-large; color: #A33333; text-align: center">
+								NO MATCHES
+							</div>
 						</div>
 					</div>
 					<div class="row" data-ng-if="testResult.capture_groups.length">
